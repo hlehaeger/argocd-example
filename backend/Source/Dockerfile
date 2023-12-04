@@ -1,10 +1,31 @@
-FROM python:3.8-slim-buster
+# Use an official Python runtime as a parent image
+FROM python:3.10-slim
+
+# Set environment variables for Python
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Set the working directory in the container
 WORKDIR /app
 
-COPY Pipfile Pipfile.lock ./
+# Copy the Pipfile and Pipfile.lock to the container
+COPY Pipfile Pipfile.lock /app/
 
-RUN pip install pipenv && pipenv install --system --deploy
+# Install Pipenv and project dependencies
+RUN pip install pipenv && pipenv install --deploy --ignore-pipfile
 
-COPY . .
+# Copy the current directory contents into the container at /app
+COPY . /app/
 
-CMD ["flask", "run", "--host=0.0.0.0"]
+# Remove the development Flask server (not suitable for production)
+RUN rm -rf ./docker
+
+# Expose the port the app runs on
+EXPOSE 5000
+
+# Define environment variables for Flask
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
+
+# Run the Flask app using Gunicorn
+CMD ["pipenv", "run", "gunicorn", "--bind", "0.0.0.0:5000", "your_flask_app:app"]
