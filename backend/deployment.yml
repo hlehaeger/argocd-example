@@ -17,6 +17,7 @@ spec:
       containers:
       - name: backend
         image: lehieu1408/pythonkafka:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
         resources:
