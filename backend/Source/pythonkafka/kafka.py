@@ -5,7 +5,11 @@ bootstrap_servers = 'kafka.default.svc.cluster.local:9092'
 # Set up Kafka producer
 producer = KafkaProducer(
     bootstrap_servers=bootstrap_servers,
-    value_serializer=lambda v: json.dumps(v).encode('utf-8')
+    value_serializer=lambda v: json.dumps(v).encode('utf-8'),
+    security_protocol='PLAINTEXT',
+    sasl_plain_username='user1',
+    sasl_plain_password='1234',
+    sasl_mechanism='PLAIN'
 )
 
 # # Set up Kafka consumer
