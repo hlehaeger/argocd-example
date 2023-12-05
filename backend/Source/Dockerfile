@@ -13,6 +13,7 @@ COPY Pipfile Pipfile.lock /app/
 
 # Install Pipenv and project dependencies
 RUN pip install pipenv && pipenv install --deploy --ignore-pipfile
+RUN pipenv install gunicorn
 
 # Copy the current directory contents into the container at /app
 COPY . /app/
@@ -28,4 +29,4 @@ ENV FLASK_APP=app.py
 ENV FLASK_RUN_HOST=0.0.0.0
 
 # Run the Flask app using Gunicorn
-CMD ["pipenv", "run", "gunicorn", "--bind", "0.0.0.0:5000", "your_flask_app:app"]
+CMD ["pipenv", "run", "gunicorn", "--bind", "0.0.0.0:5000", "pythonkafka.app:app"]

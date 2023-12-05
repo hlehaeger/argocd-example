@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from kafka import producer
+from .kafka import producer
 app = Flask(__name__)
 TOPIC_NAME = 'test'
 # Define a route to produce messages to Kafka
