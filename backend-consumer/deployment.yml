@@ -1,22 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: backend-consumer
   labels:
-    app: backend
+    app: backend-consumer
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: backend
+      app: backend-consumer
   template:
     metadata:
       labels:
-        app: backend
+        app: backend-consumer
     spec:
       containers:
-      - name: backend
-        image: lehieu1408/pythonkafka:latest
+      - name: backend-consumer
+        image: lehieu1408/pythonkafka-consume:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
         resources:
@@ -30,10 +31,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-svc
+  name: backend-consumer-svc
 spec:
   selector:
-    app: backend
+    app: backend-consumer
   ports:
     - protocol: TCP
       port: 80
