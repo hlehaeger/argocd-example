@@ -2105,6 +2105,7 @@ provisioning:
       config:
         max.message.bytes: 64000
         flush.messages: 1
+        retention.ms: 30000
     - name: metrics
       partitions: 2
       replicationFactor: 1    

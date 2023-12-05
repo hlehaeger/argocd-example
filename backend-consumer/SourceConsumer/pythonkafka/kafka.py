@@ -16,7 +16,7 @@ bootstrap_servers_ip = 'kafka.application.svc.cluster.local:9092'
 consumer = KafkaConsumer(
     'test',
     bootstrap_servers=bootstrap_servers_ip,
-    group_id='1',
+    # group_id='1',
     auto_offset_reset='earliest',
     value_deserializer=lambda x: json.loads(x.decode('utf-8')),
     security_protocol='SASL_PLAINTEXT',
