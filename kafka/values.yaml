@@ -2098,7 +2098,16 @@ provisioning:
   ##     max.message.bytes: 64000
   ##     flush.messages: 1
   ##
-  topics: ["test","prod","metrics"]
+  topics: 
+    - name: test
+      partitions: 1
+      replicationFactor: 1
+      config:
+        max.message.bytes: 64000
+        flush.messages: 1
+    - name: metrics
+      partitions: 2
+      replicationFactor: 1    
   ## @param provisioning.nodeSelector Node labels for pod assignment
   ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
