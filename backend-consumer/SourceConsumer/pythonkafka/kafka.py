@@ -18,5 +18,9 @@ consumer = KafkaConsumer(
     bootstrap_servers=bootstrap_servers_ip,
     group_id='1',
     auto_offset_reset='earliest',
-    value_deserializer=lambda x: json.loads(x.decode('utf-8'))
+    value_deserializer=lambda x: json.loads(x.decode('utf-8')),
+    security_protocol='SASL_PLAINTEXT',
+    sasl_plain_username='user1',
+    sasl_plain_password='1234',
+    sasl_mechanism='PLAIN'
 )
