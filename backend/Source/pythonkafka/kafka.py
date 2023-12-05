@@ -1,7 +1,7 @@
 from kafka import KafkaProducer, KafkaConsumer
 import json
 
-bootstrap_servers = 'kafka.default.svc.cluster.local:9092'
+bootstrap_servers = 'kafka.application.svc.cluster.local:9092'
 # Set up Kafka producer
 producer = KafkaProducer(
     bootstrap_servers=bootstrap_servers,
