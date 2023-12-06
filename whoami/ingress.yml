@@ -41,7 +41,7 @@ spec:
 ---
 # Middleware
 # Strip prefix /overview
-apiVersion: middlewares.traefik.containo.us/v1alpha1
+apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: mw-admin
