@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: my-ingress
   namespace: application
-  annotaions: 
+  annotations: 
     traefik.ingress.kubernetes.io/router.middlewares: application-mw-admin@kubernetescrd
 spec:
   ingressClassName: traefik
