@@ -43,6 +43,8 @@ spec:
     kind: PersistentVolumeClaim
   - group: ''
     kind: ServiceAccount
+  - group: '*'
+    kind: Ingress  
   - group: 'batch'
     kind: Job
 
