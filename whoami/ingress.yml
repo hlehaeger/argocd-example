@@ -14,3 +14,10 @@ spec:
                 name: whoami-svc
                 port:
                   number: 80
+          - path: /vue
+            pathType: Prefix
+            backend:
+              service:
+                name: vue-svc
+                port:
+                  number: 80
