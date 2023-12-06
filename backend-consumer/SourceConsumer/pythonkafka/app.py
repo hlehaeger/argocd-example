@@ -10,9 +10,9 @@ TOPIC_NAME = 'test'
 class BreakIt(Exception): pass
 
 # Set up MongoDB client
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb://user:randompwd@mongo-mongodb:27017/')
 db = client['mydatabase']
-collection = db['mycollection']
+collection = db['messages']
 
 # Define a route to produce messages to Kafka
 # @app.route('/produce', methods=['POST'])
@@ -68,6 +68,12 @@ def kafka_consumer():
 # Start Kafka consumer in a background thread
 consumer_thread = Thread(target=kafka_consumer)
 consumer_thread.start()
+
+@app.route('/consume', methods=['GET'])
+def consume_message():
+    # Get the last 10 messages from MongoDB
+    messages = list(collection.find().sort('_id', -1).limit(10))
+    return jsonify({'messages': messages})
 
 if __name__ == '__main__':
     app.run(debug=True)
