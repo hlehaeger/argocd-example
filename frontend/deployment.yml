@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: containous/whoami
+        image: lehieu1408/vue
         ports:
         - containerPort: 80
         resources:

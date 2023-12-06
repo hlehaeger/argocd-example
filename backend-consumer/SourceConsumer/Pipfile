@@ -8,6 +8,7 @@ kafka-python = "2.0.2"
 flask = "*"
 gunicorn = "*"
 pymongo = "*"
+bson = "*"
 
 [dev-packages]
 

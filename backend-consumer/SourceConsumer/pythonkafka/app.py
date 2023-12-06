@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from bson import json_util
 from .kafka import consumer
 from kafka.errors import KafkaError
 from threading import Thread
@@ -10,8 +11,8 @@ TOPIC_NAME = 'test'
 class BreakIt(Exception): pass
 
 # Set up MongoDB client
-client = MongoClient('mongodb://user:randompwd@mongo-mongodb:27017/')
-db = client['mydatabase']
+client = MongoClient('mongodb://user:randompwd@mongo-mongodb:27017/mydatabase')
+db = client.get_default_database()
 collection = db['messages']
 
 # Define a route to produce messages to Kafka
@@ -73,7 +74,8 @@ consumer_thread.start()
 def consume_message():
     # Get the last 10 messages from MongoDB
     messages = list(collection.find().sort('_id', -1).limit(10))
-    return jsonify({'messages': messages})
+    messages_json = json.dumps(messages, default=json_util.default)
+    return jsonify({'messages': messages_json})
 
 if __name__ == '__main__':
     app.run(debug=True)
