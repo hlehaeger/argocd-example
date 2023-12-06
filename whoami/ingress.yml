@@ -21,3 +21,17 @@ spec:
                 name: vue-svc
                 port:
                   number: 80
+          - path: /consumer
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-consumer-svc
+                port:
+                  number: 80
+          - path: /producer
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-svc
+                port:
+                  number: 80
