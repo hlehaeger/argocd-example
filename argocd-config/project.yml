@@ -63,7 +63,8 @@ spec:
     kind: PodDisruptionBudget'  
   - group: 'argoproj.io'
     kind: Application
-
+  - group: 'argoproj.io'
+    kind: AppProject
   clusterResourceWhitelist:
   - group: ''
     kind: 'Namespace'
