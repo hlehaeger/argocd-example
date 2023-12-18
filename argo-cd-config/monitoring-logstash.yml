@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kafka
+  name: logstash
   namespace: argocd
   labels:
-    app.kubernetes.io/name: kafka
+    app.kubernetes.io/name: logstash
     app.kubernetes.io/part-of: argocd
 spec:
   project: pyproject
   source:
     repoURL: 'https://github.com/hlehaeger/argocd-example.git'
     targetRevision: HEAD
-    path: kafka
+    path: logstash
 
     # chart: kafka  # Set this when pulling directly from a Helm repo. DO NOT set for git-hosted Helm charts.
     helm:
@@ -30,17 +30,17 @@ spec:
   sources:
     - repoURL: https://github.com/hlehaeger/argocd-example.git  # Can point to either a Helm chart repo or a git repo.
       targetRevision: HEAD  # For Helm, this refers to the chart version.
-      path: kafka
+      path: logstash
   destination:
     # cluster API URL
     server: https://kubernetes.default.svc
     # or cluster name
     # name: in-cluster
     # The namespace will only be set for namespace-scoped resources that have not set a value for .metadata.namespace
-    namespace: application
+    namespace: monitoring
   info:
     - name: 'Application:'
-      value: 'Python Kafka App'
+      value: 'logstash App'
   syncPolicy:
     automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
       prune: false # Specifies if resources should be pruned during auto-syncing ( false by default ).

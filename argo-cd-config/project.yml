@@ -20,6 +20,9 @@ spec:
   - namespace: application
     server: https://kubernetes.default.svc
     name: in-cluster
+  - namespace: monitoring
+    server: https://kubernetes.default.svc
+    name: in-cluster  
 
   # Deny all namespaced-scoped resources from being created, except for Deployment and StatefulSet
   namespaceResourceWhitelist:
