@@ -61,9 +61,9 @@ spec:
     kind: RoleBinding
   - group: 'policy'
     kind: PodDisruptionBudget'  
-  - group: ' argoproj.io'
+  - group: 'argoproj.io'
     kind: Application
-    
+
   clusterResourceWhitelist:
   - group: ''
     kind: 'Namespace'
