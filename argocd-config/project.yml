@@ -60,7 +60,7 @@ spec:
   - group: 'rbac.authorization.k8s.io'
     kind: RoleBinding
   - group: 'policy'
-    kind: PodDisruptionBudget'  
+    kind: PodDisruptionBudget  
   - group: 'argoproj.io'
     kind: Application
   - group: 'argoproj.io'
