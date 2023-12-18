@@ -22,7 +22,10 @@ spec:
     name: in-cluster
   - namespace: monitoring
     server: https://kubernetes.default.svc
-    name: in-cluster  
+    name: in-cluster 
+  - namespace: argocd
+    server: https://kubernetes.default.svc
+    name: in-cluster     
 
   # Deny all namespaced-scoped resources from being created, except for Deployment and StatefulSet
   namespaceResourceWhitelist:
@@ -51,7 +54,11 @@ spec:
   - group: 'batch'
     kind: Job
   - group: '*'
-    kind: Middleware``  
+    kind: Middleware
+  - group: 'rbac.authorization.k8s.io'
+    kind: Role
+  - group: 'rbac.authorization.k8s.io'
+    kind: RoleBinding
 
   clusterResourceWhitelist:
   - group: ''
