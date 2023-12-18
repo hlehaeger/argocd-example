@@ -59,7 +59,11 @@ spec:
     kind: Role
   - group: 'rbac.authorization.k8s.io'
     kind: RoleBinding
-
+  - group: 'policy'
+    kind: PodDisruptionBudget'  
+  - group: ' argoproj.io'
+    kind: Application
+    
   clusterResourceWhitelist:
   - group: ''
     kind: 'Namespace'
