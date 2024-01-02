@@ -42,10 +42,6 @@ spec:
     - name: 'Application:'
       value: 'Python Kafka App'
   syncPolicy:
-    manual:
-      prune: true
-      selfHeal: true
-      allowEmpty: false # all application resources during automatic syncing ( false by default ).
     syncOptions:     # Sync options which modifies sync behavior
     - Validate=false # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
     - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
