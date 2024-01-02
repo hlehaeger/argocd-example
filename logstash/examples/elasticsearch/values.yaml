@@ -11,7 +11,7 @@ logstashPipeline:
     input { exec { command => "uptime" interval => 30 } }
     output {
       elasticsearch {
-        hosts => ["https://elasticsearch-master:9200"]
+        hosts => ["https://elastic-search-elastic-svc:9200"]
         user => '${ELASTICSEARCH_USERNAME}'
         cacert => '/usr/share/logstash/config/certs/ca.crt'
         password => '${ELASTICSEARCH_PASSWORD}'

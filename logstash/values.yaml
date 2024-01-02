@@ -6,7 +6,10 @@ replicas: 1
 #
 # Note that when overriding logstash.yml, `http.host: 0.0.0.0` should always be included
 # to make default probes work.
-logstashConfig: {}
+logstashConfig:
+  logstash.yml: |
+    http.host: 0.0.0.0
+    xpack.monitoring.enabled: false
 #  logstash.yml: |
 #    key:
 #      nestedkey: value
@@ -15,7 +18,18 @@ logstashConfig: {}
 
 # Allows you to add any pipeline files in /usr/share/logstash/pipeline/
 ### ***warn*** there is a hardcoded logstash.conf in the image, override it first
-logstashPipeline: {}
+logstashPipeline:
+  uptime.conf: |
+    input { exec { command => "uptime" interval => 30 } }
+    output {
+      elasticsearch {
+        hosts => ["https://elastic-search-elastic-svc:9200"]
+        user => '${ELASTICSEARCH_USERNAME}'
+        cacert => '/usr/share/logstash/config/certs/ca.crt'
+        password => '${ELASTICSEARCH_PASSWORD}'
+        index => "logstash"
+      }
+    }
 #  logstash.conf: |
 #    input {
 #      exec {
@@ -34,7 +48,17 @@ logstashPattern: {}
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
-extraEnvs: []
+extraEnvs:
+  # - name: "ELASTICSEARCH_USERNAME"
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: elasticsearch-master-credentials
+  #       key: username
+  # - name: "ELASTICSEARCH_PASSWORD"
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: elasticsearch-master-credentials
+  #       key: password
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
@@ -47,6 +71,9 @@ envFrom: []
 
 # Add sensitive data to k8s secrets
 secrets: []
+
+
+
 #  - name: "env"
 #    value:
 #      ELASTICSEARCH_PASSWORD: "LS1CRUdJTiBgUFJJVkFURSB"

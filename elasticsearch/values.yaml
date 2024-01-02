@@ -23,7 +23,7 @@ global:
   storageClass: ""
   elasticsearch:
     service:
-      name: elastic-search-elasticsearch
+      name: elastic-svc
       ports:
         restAPI: 9200
   kibanaEnabled: true

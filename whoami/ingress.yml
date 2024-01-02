@@ -38,6 +38,13 @@ spec:
                 name: backend-svc
                 port:
                   number: 80
+          - path: /argo
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server.argocd.svc.cluster.local
+                port:
+                  number: 80 
 # ---
 # # Middleware
 # # Strip prefix /overview
