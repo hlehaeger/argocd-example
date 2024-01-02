@@ -18,15 +18,15 @@ logstashConfig:
 
 # Allows you to add any pipeline files in /usr/share/logstash/pipeline/
 ### ***warn*** there is a hardcoded logstash.conf in the image, override it first
+        # user => '${ELASTICSEARCH_USERNAME}'
+        # cacert => '/usr/share/logstash/config/certs/ca.crt'
+        # password => '${ELASTICSEARCH_PASSWORD}'
 logstashPipeline:
   uptime.conf: |
     input { exec { command => "uptime" interval => 30 } }
     output {
       elasticsearch {
         hosts => ["https://elastic-search-elastic-svc:9200"]
-        user => '${ELASTICSEARCH_USERNAME}'
-        cacert => '/usr/share/logstash/config/certs/ca.crt'
-        password => '${ELASTICSEARCH_PASSWORD}'
         index => "logstash"
       }
     }
