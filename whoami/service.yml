@@ -12,3 +12,11 @@ spec:
   selector:
     app: whoami
   type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: argocd-server-svc
+spec:
+  type: ExternalName
+  externalName: argocd-server.argocd.svc.cluster.local

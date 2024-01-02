@@ -42,7 +42,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: argocd-server.argocd.svc.cluster.local
+                name: argocd-server-svc
                 port:
                   number: 80 
 # ---
