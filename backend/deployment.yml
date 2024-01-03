@@ -58,7 +58,7 @@ spec:
         ]
         env:
         - name: LOGSTASH_HOST
-          value: logstash.monitoring.svc.cluster.local 
+          value: logstash-logstash-headless.monitoring.svc.cluster.local 
         - name: LOGSTASH_PORT
           value: "9600"
         resources:
