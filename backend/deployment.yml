@@ -13,15 +13,6 @@ data:
     output.logstash:
       hosts: ["${LOGSTASH_HOST}:${LOGSTASH_PORT}"]
 ---
-apiVersion: v1 
-kind: Service
-metadata:
-  name: logstash-svc-name
-  namespace: application
-spec:
-  type: ExternalName
-  externalName: logstash.monitoring.svc.cluster.local  
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -67,7 +58,7 @@ spec:
         ]
         env:
         - name: LOGSTASH_HOST
-          value: "logstash-svc-name"
+          value: logstash.monitoring.svc.cluster.local 
         - name: LOGSTASH_PORT
           value: "9600"
         resources:
