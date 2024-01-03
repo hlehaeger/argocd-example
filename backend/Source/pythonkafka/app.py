@@ -1,5 +1,8 @@
 from flask import Flask, request, jsonify
 from .kafka import producer
+import logging
+
+logging.basicConfig(filename='/var/log/app.log', level=logging.DEBUG)
 app = Flask(__name__)
 TOPIC_NAME = 'test'
 # Define a route to produce messages to Kafka

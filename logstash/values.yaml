@@ -23,13 +23,25 @@ logstashConfig:
         # password => '${ELASTICSEARCH_PASSWORD}'
 logstashPipeline:
   uptime.conf: |
-    input { exec { command => "uptime" interval => 30 } }
+    input { exec { command => "uptime" interval => 60 } }
     output {
       elasticsearch {
         hosts => ["elastic-search-elastic-svc:9200"]
         index => "logstash"
       }
     }
+  logstash.conf: |
+    input {
+      beats {
+        port => 9600
+      }
+    }
+    output {
+      elasticsearch {
+        hosts => ["elastic-search-elastic-svc:9200"]
+        index => "filebeat-%{+YYYY.MM.dd}"
+      }
+    }   
 #  logstash.conf: |
 #    input {
 #      exec {

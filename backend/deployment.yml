@@ -1,3 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: filebeat-config
+  namespace: application
+data:
+  filebeat.yml: |
+    filebeat.inputs:
+    - type: log
+      enabled: true
+      paths:
+        - /var/log/app.log
+    output.logstash:
+      hosts: ["${LOGSTASH_HOST}:${LOGSTASH_PORT}"]
+---
+apiVersion: v1 
+kind: Service
+metadata:
+  name: logstash-svc-name
+  namespace: application
+spec:
+  type: ExternalName
+  externalName: logstash.monitoring.svc.cluster.local  
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,6 +41,9 @@ spec:
       containers:
       - name: backend
         image: lehieu1408/pythonkafka:latest
+        volumeMounts:
+        - name: log
+          mountPath: /var/log
         ports:
         - containerPort: 5000
         resources:
@@ -25,7 +52,37 @@ spec:
             cpu: "500m"
           requests:
             memory: "64Mi"
-            cpu: "250m"            
+            cpu: "250m"
+      - name: filebeat
+        image: docker.elastic.co/beats/filebeat:8.11.3
+        volumeMounts:
+        - name: log
+          mountPath: /var/log
+        - name: config
+          mountPath: /etc/filebeat
+          readOnly: true  
+        args: [
+          "-c", "/etc/filebeat/filebeat.yml",
+          "-e",
+        ]
+        env:
+        - name: LOGSTASH_HOST
+          value: "logstash-svc-name"
+        - name: LOGSTASH_PORT
+          value: "9600"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "64Mi"
+            cpu: "250m"                      
+      volumes:
+      - name: log
+        emptyDir: {}
+      - name: config
+        configMap:
+          name: filebeat-config  
 ---
 apiVersion: v1
 kind: Service
