@@ -26,7 +26,7 @@ logstashPipeline:
     input { exec { command => "uptime" interval => 30 } }
     output {
       elasticsearch {
-        hosts => ["https://elastic-search-elastic-svc:9200"]
+        hosts => ["elastic-search-elastic-svc:9200"]
         index => "logstash"
       }
     }
