@@ -60,4 +60,5 @@ spec:
     prefixes:
       - /vue
       - /consumer
-      - /producer              
+      - /producer
+      - /kibana         
