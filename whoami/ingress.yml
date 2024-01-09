@@ -38,14 +38,6 @@ spec:
                 name: backend-svc
                 port:
                   number: 80
-          - path: /kibana
-            pathType: Prefix
-            backend:
-              service:
-                name: elastic-search-kibana.monitoring
-                port:
-                  number: 80
-          #         number: 80 
 ---
 # # Middleware
 # # Strip prefix /overview
@@ -61,4 +53,4 @@ spec:
       - /vue
       - /consumer
       - /producer
-      - /kibana         
+    
