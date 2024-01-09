@@ -11,7 +11,7 @@ TOPIC_NAME = 'test'
 class BreakIt(Exception): pass
 
 # Set up MongoDB client
-client = MongoClient('mongodb://user:randompwd@mongo-mongodb:27017/mydatabase')
+client = MongoClient('mongodb://user:randompwd@mongo-app-mongodb:27017/mydatabase')
 db = client.get_default_database()
 collection = db['messages']
 
