@@ -16,8 +16,7 @@ spec:
     spec:
       containers:
       - name: backend-consumer
-        image: lehieu1408/pythonkafka-consumer:latest
-        imagePullPolicy: Always
+        image: lehieu1408/pythonkafka-consumer:1.0
         ports:
         - containerPort: 5000
         resources:
