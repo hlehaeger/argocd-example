@@ -3,8 +3,8 @@ kind: Ingress
 metadata:
   name: my-ingress
   namespace: application
-  # annotations: 
-  #   traefik.ingress.kubernetes.io/router.middlewares: application-mw-admin@kubernetescrd
+  annotations: 
+    traefik.ingress.kubernetes.io/router.middlewares: application-mw-admin@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
@@ -45,16 +45,18 @@ spec:
           #       name: argocd-server-svc
           #       port:
           #         number: 80 
-# ---
+---
 # # Middleware
 # # Strip prefix /overview
-# apiVersion: traefik.containo.us/v1alpha1
-# kind: Middleware
-# metadata:
-#   name: mw-admin
-#   namespace: application
-# spec:
-#   stripPrefix:
-#     forceSlash: false
-#     prefixes:
-#       - /vue                  
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: mw-admin
+  namespace: application
+spec:
+  stripPrefix:
+    forceSlash: false
+    prefixes:
+      - /vue
+      - /consumer
+      - /producer              
