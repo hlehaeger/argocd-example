@@ -9,12 +9,11 @@ TOPIC_NAME = 'test'
 @app.route('/produce', methods=['POST'])
 def produce_message():
     data = request.get_json()
-    message = data.get('message')
-    print(f"Message received: {message}")
+    print(f"Data received: {data}")
     # Produce the message to Kafka
-    future = producer.send(TOPIC_NAME, {'message': message})
+    future = producer.send(TOPIC_NAME, data)
     record_metadata = future.get(timeout=10)
-    print(f"Message \"{message}\" sent to topic {record_metadata.topic} partition {record_metadata.partition} with offset {record_metadata.offset}")
+    print(f"Message sent to topic {record_metadata.topic} partition {record_metadata.partition} with offset {record_metadata.offset}")
     return jsonify({'status': 'success', 'message': f'Message sent to {record_metadata.topic} in partition {record_metadata.partition} with offset {record_metadata.offset}'})
 
 # # Define a route to consume messages from Kafka
