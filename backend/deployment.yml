@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: lehieu1408/pythonkafka:latest
+        image: lehieu1408/pythonkafka:1.0
         volumeMounts:
         - name: log
           mountPath: /var/log
