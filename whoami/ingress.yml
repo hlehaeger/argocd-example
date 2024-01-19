@@ -37,21 +37,7 @@ spec:
               service:
                 name: backend-svc
                 port:
-                  number: 80
-          - path: /grafana
-            pathType: Prefix
-            backend:
-              service:
-                name: grafana
-                port:
-                  number: 80
-          - path: /argocd
-            pathType: Prefix
-            backend:
-              service:
-                name: argocd-server
-                port:
-                  number: 80                
+                  number: 80           
 # ---
 # # Middleware
 # # Strip prefix /overview
@@ -63,22 +49,22 @@ spec:
 # spec:
 #   stripPrefix:
 #     forceSlash: false
-#       - /vue       
+#       - /vue
 ---
-apiVersion: v1 
-kind: Service
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: argocd-server
-  namespace: application
+  name: grafana-server-ingress
+  namespace: monitoring
 spec:
-  type: ExternalName
-  externalName: argocd-server.argocd.svc.cluster.local   
----
-apiVersion: v1 
-kind: Service
-metadata:
-  name: grafana
-  namespace: application
-spec:
-  type: ExternalName
-  externalName: loki-stack-grafana.monitoring.svc.cluster.local  
+  ingressClassName: traefik
+  rules:
+    - http:
+        paths:
+          - path: /grafana
+            pathType: Prefix
+            backend:
+              service:
+                name: loki-stack-grafana
+                port:
+                  number: 80     
