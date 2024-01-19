@@ -6,7 +6,7 @@ metadata:
   # annotations: 
     # traefik.ingress.kubernetes.io/router.middlewares: application-mw-admin@kubernetescrd
 spec:
-  ingressClassName: traefik
+  ingressClassName: nginx
   rules:
     - http:
         paths:
@@ -38,19 +38,6 @@ spec:
                 name: backend-svc
                 port:
                   number: 80           
----
-# Middleware
-# Strip prefix /overview
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: mw-admin
-  namespace: monitoring
-spec:
-  stripPrefix:
-    forceSlash: false
-    prefixes:
-      - /grafana
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
