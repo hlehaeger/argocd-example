@@ -64,10 +64,10 @@ spec:
   rules:
     - http:
         paths:
-          - path: /grafana/?(.*)
-            pathType: ImplementationSpecific
+          - path: /grafana/ #?(.*)
+            pathType: Prefix
             backend:
               service:
                 name: loki-stack-grafana
                 port:
-                  number: 80     
+                  number: 80
