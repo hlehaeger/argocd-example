@@ -1,3 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: filebeat-config-consume
+  namespace: application
+data:
+  filebeat.yml: |
+    filebeat.inputs:
+    - type: log
+      enabled: true
+      paths:
+        - /var/log/app.log
+    processors:
+    - add_kubernetes_metadata:
+        in_cluster: true    
+    output.loki:
+      hosts: ["${LOKI_HOST}"]
+---      
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,7 +34,7 @@ spec:
     spec:
       containers:
       - name: backend-consumer
-        image: lehieu1408/pythonkafka-consumer:1.0
+        image: lehieu1408/pythonkafka-consumer:1.1
         ports:
         - containerPort: 5000
         resources:
@@ -25,7 +43,35 @@ spec:
             cpu: "500m"
           requests:
             memory: "64Mi"
-            cpu: "250m"            
+            cpu: "250m"
+      - name: filebeat
+        image: docker.elastic.co/beats/filebeat:8.11.3
+        volumeMounts:
+        - name: log
+          mountPath: /var/log
+        - name: config
+          mountPath: /etc/filebeat
+          readOnly: true  
+        args: [
+          "-c", "/etc/filebeat/filebeat.yml",
+          "-e",
+        ]
+        env:
+        - name: LOKI_HOST
+          value: loki-stack.monitoring.svc.cluster.local:3100
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "64Mi"
+            cpu: "250m"                      
+      volumes:
+      - name: log
+        emptyDir: {}
+      - name: config
+        configMap:
+          name: filebeat-config-consume                   
 ---
 apiVersion: v1
 kind: Service

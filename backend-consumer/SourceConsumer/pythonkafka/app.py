@@ -5,7 +5,9 @@ from kafka.errors import KafkaError
 from threading import Thread
 from pymongo import MongoClient
 import json
+import logging
 
+logging.basicConfig(level=logging.INFO)
 app = Flask(__name__)
 TOPIC_NAME = 'test'
 class BreakIt(Exception): pass
@@ -75,6 +77,7 @@ def consume_message():
     # Get the last 10 messages from MongoDB
     messages = list(collection.find().sort('_id', -1).limit(10))
     messages_json = json.dumps(messages, default=json_util.default)
+    logging.info(f"Messages: {messages_json}")
     return jsonify({'messages': messages_json})
 
 if __name__ == '__main__':
