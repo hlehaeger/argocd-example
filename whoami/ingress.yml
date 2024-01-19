@@ -58,3 +58,23 @@ spec:
                 name: loki-stack-grafana
                 port:
                   number: 80
+          - path: /argocd/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: argocd-svc-external
+                port:
+                  number: 80        
+---
+apiVersion: v1 
+kind: Service
+metadata:
+  name: argocd-svc-external
+  namespace: monitoring
+spec:
+  type: ExternalName
+  externalName: argocd-server.argocd.svc.cluster.local
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
