@@ -7,7 +7,7 @@ from pymongo import MongoClient
 import json
 import logging
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(filename='/var/log/app.log',level=logging.INFO)
 app = Flask(__name__)
 TOPIC_NAME = 'test'
 class BreakIt(Exception): pass
@@ -17,41 +17,6 @@ client = MongoClient('mongodb://user:randompwd@mongo-app-mongodb:27017/mydatabas
 db = client.get_default_database()
 collection = db['messages']
 
-# Define a route to produce messages to Kafka
-# @app.route('/produce', methods=['POST'])
-# def produce_message():
-#     data = request.get_json()
-#     message = data.get('message')
-
-#     # Produce the message to Kafka
-#     producer.send(TOPIC_NAME, {'message': message})
-#     return jsonify({'status': 'success', 'message': 'Message sent to Kafka'})
-
-# # Define a route to consume messages from Kafka
-# @app.route('/consume', methods=['GET'])
-# def consume_message():
-#     messages = []
-#     consumer.subscribe([TOPIC_NAME])
-#     # Consume messages from Kafka
-#     try:
-#         while True:
-#                 message = consumer.poll(timeout_ms=5000)  # Wait for 5 seconds
-#                 if message is None:
-#                     # No message received within timeout
-#                     break
-#                 else:
-#                     # Process the received message
-#                     for tp, msgs in message.items():
-#                         for msg in msgs:
-#                             print(f"Received message: {msg.value}")
-#                             messages.append(msg.value)
-#                             raise BreakIt
-#     except KafkaTimeoutError as e:
-#         print(f"Exception occurred while consuming messages: {e}")
-#         return jsonify({'error': f'Exception occurred while consuming messages: str{e}'})       
-#     except BreakIt:
-#         pass
-#     return jsonify({'messages': [str(m) for m in messages]})
 
 # Kafka consumer function
 def kafka_consumer():
