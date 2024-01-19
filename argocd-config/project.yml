@@ -56,9 +56,13 @@ spec:
   - group: '*'
     kind: Middleware
   - group: 'rbac.authorization.k8s.io'
-    kind: Role
+    kind: Role  
   - group: 'rbac.authorization.k8s.io'
     kind: RoleBinding
+  - group: 'rbac.authorization.k8s.io'
+    kind: ClusterRole
+  - group: 'rbac.authorization.k8s.io'
+    kind: ClusterRoleBinding  
   - group: 'policy'
     kind: PodDisruptionBudget  
   - group: 'argoproj.io'
