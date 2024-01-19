@@ -72,7 +72,7 @@ metadata:
   namespace: application
 spec:
   type: ExternalName
-  externalName: argocd-server.argocd      
+  externalName: argocd-server.argocd.svc.cluster.local   
 ---
 apiVersion: v1 
 kind: Service
@@ -81,4 +81,4 @@ metadata:
   namespace: application
 spec:
   type: ExternalName
-  externalName: loki-stack-grafana.monitoring   
+  externalName: loki-stack-grafana.monitoring.svc.cluster.local  
