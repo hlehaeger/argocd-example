@@ -38,18 +38,47 @@ spec:
                 name: backend-svc
                 port:
                   number: 80
----
+          - path: /grafana
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 80
+          - path: /argocd
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80                
+# ---
 # # Middleware
 # # Strip prefix /overview
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: Middleware
+# metadata:
+#   name: mw-admin
+#   namespace: application
+# spec:
+#   stripPrefix:
+#     forceSlash: false
+#       - /vue       
+---
+apiVersion: v1 
+kind: Service
 metadata:
-  name: mw-admin
+  name: argocd-server
   namespace: application
 spec:
-  stripPrefix:
-    forceSlash: false
-    prefixes:
-      - /vue
-      - /consumer
-      - /producer      
+  type: ExternalName
+  externalName: argocd-server.argocd      
+---
+apiVersion: v1 
+kind: Service
+metadata:
+  name: grafana
+  namespace: application
+spec:
+  type: ExternalName
+  externalName: loki-stack-grafana.monitoring   
